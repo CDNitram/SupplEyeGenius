@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Offshore Drilling — Market Cap Snapshot | August 2026</title>
+
+<style>
+    :root {
+        --bg: #07111f;
+        --bg-secondary: #0b1728;
+        --card: #101f33;
+        --card-hover: #142840;
+        --border: rgba(255,255,255,0.09);
+
+        --text: #f4f7fb;
+        --muted: #9caec4;
+
+        --blue: #2f9bff;
+        --cyan: #31d3e8;
+        --green: #2dd881;
+        --orange: #ffb020;
+        --red: #ff5d5d;
+
+        --gradient: linear-gradient(135deg, #2f9bff, #31d3e8);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+                     BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+            radial-gradient(circle at 15% 10%, rgba(47,155,255,.12), transparent 30%),
+            radial-gradient(circle at 85% 20%, rgba(49,211,232,.08), transparent 25%),
+            var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .container {
+        max-width: 1250px;
+        margin: 0 auto;
+    }
+
+    /* HEADER */
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 30px;
+        margin-bottom: 36px;
+    }
+
+    .eyebrow {
+        color: var(--cyan);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 12px;
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    h1 {
+        font-size: clamp(34px, 5vw, 62px);
+        line-height: 1;
+        letter-spacing: -2px;
+        margin-bottom: 14px;
+    }
+
+    .subtitle {
+        color: var(--muted);
+        font-size: 17px;
+        max-width: 720px;
+        line-height: 1.6;
+    }
+
+    .date-badge {
+        padding: 12px 18px;
+        border: 1px solid var(--border);
+        background: rgba(255,255,255,.04);
+        border-radius: 12px;
+        color: var(--muted);
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .date-badge strong {
+        color: var(--text);
+    }
+
+    /* HERO STATS */
+
+    .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 22px;
+    }
+
+    .stat-card {
+        background: linear-gradient(145deg, rgba(20,40,64,.95), rgba(10,23,40,.95));
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 24px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: var(--gradient);
+    }
+
+    .stat-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1.4px;
+        color: var(--muted);
+        margin-bottom: 12px;
+        font-weight: 700;
+    }
+
+    .stat-value {
+        font-size: 34px;
+        font-weight: 800;
+        letter-spacing: -1px;
+    }
+
+    .stat-note {
+        margin-top: 8px;
+        color: var(--green);
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    /* MARKET TABLE */
+
+    .section-card {
+        background: rgba(16,31,51,.82);
+        backdrop-filter: blur(12px);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 28px;
+        margin-bottom: 22px;
+    }
+
+    .section-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 24px;
+    }
+
+    h2 {
+        font-size: 21px;
+        letter-spacing: -.5px;
+    }
+
+    .section-tag {
+        color: var(--cyan);
+        background: rgba(49,211,232,.08);
+        border: 1px solid rgba(49,211,232,.18);
+        padding: 7px 12px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 850px;
+    }
+
+    th {
+        text-align: left;
+        color: var(--muted);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        padding: 0 16px 14px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    td {
+        padding: 20px 16px;
+        border-bottom: 1px solid rgba(255,255,255,.06);
+        font-size: 15px;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    tbody tr {
+        transition: .2s ease;
+    }
+
+    tbody tr:hover {
+        background: rgba(255,255,255,.025);
+    }
+
+    .company {
+        font-weight: 800;
+        font-size: 17px;
+    }
+
+    .ticker {
+        display: inline-block;
+        color: var(--blue);
+        font-weight: 800;
+    }
+
+    .price {
+        font-weight: 700;
+    }
+
+    .market-cap {
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+    .positive {
+        color: var(--green);
+        font-weight: 800;
+    }
+
+    .recovery {
+        color: var(--orange);
+        font-weight: 700;
+    }
+
+    /* INSIGHTS */
+
+    .insights-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        margin-bottom: 22px;
+    }
+
+    .insight {
+        background: rgba(16,31,51,.82);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 28px;
+    }
+
+    .insight-icon {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        background: rgba(47,155,255,.12);
+        border: 1px solid rgba(47,155,255,.2);
+        border-radius: 12px;
+        font-size: 20px;
+        margin-bottom: 18px;
+    }
+
+    .insight h3 {
+        font-size: 19px;
+        margin-bottom: 12px;
+    }
+
+    .insight p {
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 14px;
+    }
+
+    .highlight {
+        color: var(--text);
+        font-weight: 700;
+    }
+
+    /* MERGER */
+
+    .merger-card {
+        background:
+            linear-gradient(135deg, rgba(47,155,255,.13), rgba(49,211,232,.05)),
+            var(--card);
+        border: 1px solid rgba(47,155,255,.25);
+        border-radius: 22px;
+        padding: 34px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .merger-card::before {
+        content: "RIG + VAL";
+        position: absolute;
+        right: -10px;
+        top: -25px;
+        font-size: 100px;
+        font-weight: 900;
+        color: rgba(255,255,255,.025);
+        letter-spacing: -8px;
+    }
+
+    .merger-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .merger-label {
+        color: var(--cyan);
+        text-transform: uppercase;
+        letter-spacing: 1.8px;
+        font-size: 11px;
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .merger-card h2 {
+        font-size: 30px;
+        margin-bottom: 16px;
+    }
+
+    .merger-card p {
+        color: var(--muted);
+        line-height: 1.7;
+        max-width: 850px;
+    }
+
+    .merger-number {
+        display: inline-block;
+        margin-top: 22px;
+        padding: 16px 22px;
+        background: rgba(255,255,255,.06);
+        border-radius: 14px;
+        border: 1px solid var(--border);
+    }
+
+    .merger-number small {
+        display: block;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 10px;
+        margin-bottom: 5px;
+    }
+
+    .merger-number strong {
+        font-size: 27px;
+        color: var(--cyan);
+    }
+
+    /* FOOTER */
+
+    footer {
+        text-align: center;
+        color: #62738a;
+        font-size: 12px;
+        margin-top: 30px;
+        line-height: 1.6;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 850px) {
+        .header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .hero-stats,
+        .insights-grid {
+            grid-template-columns: 1fr;
+        }
+
+        body {
+            padding: 25px 14px;
+        }
+
+        .section-card,
+        .insight,
+        .merger-card {
+            padding: 22px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div>
+            <div class="eyebrow">Energy Markets · Offshore Drilling</div>
+
+            <h1>Market Cap Snapshot</h1>
+
+            <p class="subtitle">
+                Offshore drilling contractors are experiencing a significant market
+                re-rating, driven by elevated day rates, tightening deepwater capacity
+                and improving long-term utilization.
+            </p>
+        </div>
+
+        <div class="date-badge">
+            Snapshot: <strong>August 2026</strong>
+        </div>
+
+    </header>
+
+
+    <!-- HERO STATS -->
+
+    <section class="hero-stats">
+
+        <div class="stat-card">
+            <div class="stat-label">Largest Market Cap</div>
+            <div class="stat-value">~$7.7B</div>
+            <div class="stat-note">Transocean · RIG</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Strongest YoY Growth</div>
+            <div class="stat-value">+137%</div>
+            <div class="stat-note">Seadrill · SDRL</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Potential Combined Value</div>
+            <div class="stat-value">$12–14B</div>
+            <div class="stat-note">RIG + VAL scenario</div>
+        </div>
+
+    </section>
+
+
+    <!-- MARKET TABLE -->
+
+    <section class="section-card">
+
+        <div class="section-title">
+            <h2>Offshore Drilling Market Comparison</h2>
+            <span class="section-tag">NYSE Listed</span>
+        </div>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Ticker</th>
+                        <th>Price</th>
+                        <th>Market Cap</th>
+                        <th>52-Week Range</th>
+                        <th>YoY Change</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td class="company">Transocean</td>
+                        <td><span class="ticker">NYSE: RIG</span></td>
+                        <td class="price">~$5.80–6.91</td>
+                        <td class="market-cap">~$6.4–7.7B</td>
+                        <td>$2.94–7.66</td>
+                        <td class="positive">+115%</td>
+                    </tr>
+
+                    <tr>
+                        <td class="company">Valaris</td>
+                        <td><span class="ticker">NYSE: VAL</span></td>
+                        <td class="price">~$98.09</td>
+                        <td class="market-cap">~$5.46–6.9B</td>
+                        <td>—</td>
+                        <td class="recovery">Significant recovery</td>
+                    </tr>
+
+                    <tr>
+                        <td class="company">Seadrill</td>
+                        <td><span class="ticker">NYSE: SDRL</span></td>
+                        <td class="price">~$42.58</td>
+                        <td class="market-cap">~$3.0–3.1B</td>
+                        <td>$27.40–55.47</td>
+                        <td class="positive">+137%</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- KEY CONTEXT -->
+
+    <section class="insights-grid">
+
+        <article class="insight">
+
+            <div class="insight-icon">⚓</div>
+
+            <h3>Transocean: Deepwater Momentum</h3>
+
+            <p>
+                Transocean's Q2 2026 revenue reached
+                <span class="highlight">$966M</span>, slightly above the
+                <span class="highlight">$962.88M consensus</span>.
+            </p>
+
+            <br>
+
+            <p>
+                The strategic backdrop remains increasingly favorable, with
+                deepwater rig utilization expected to approach
+                <span class="highlight">100% by 2027</span>.
+            </p>
+
+        </article>
+
+
+        <article class="insight">
+
+            <div class="insight-icon">📈</div>
+
+            <h3>Seadrill: Earnings Recovery</h3>
+
+            <p>
+                Seadrill posted Q1 2026 EPS of
+                <span class="highlight">−$0.11</span>, outperforming the
+                <span class="highlight">−$0.28 forecast</span>.
+            </p>
+
+            <br>
+
+            <p>
+                Revenue reached <span class="highlight">$358M</span>, supporting
+                an increase in full-year 2026 operating revenue guidance to
+                <span class="highlight">$1.43B–$1.48B</span>.
+            </p>
+
+        </article>
+
+    </section>
+
+
+    <!-- MARKET RE-RATING -->
+
+    <section class="section-card">
+
+        <div class="section-title">
+            <h2>The Offshore Drilling Re-Rating</h2>
+            <span class="section-tag">Sector Tailwind</span>
+        </div>
+
+        <p style="color: var(--muted); line-height: 1.8; max-width: 1000px;">
+            Offshore drilling equities have experienced a substantial market re-rating.
+            Transocean's market capitalization increased approximately
+            <strong style="color: var(--green);">115.61%</strong> over the past
+            12 months, while Seadrill increased approximately
+            <strong style="color: var(--green);">137.49%</strong>.
+            The move reflects a combination of elevated day rates, tightening offshore
+            capacity, improving contract visibility and an energy-sector geopolitical
+            premium.
+        </p>
+
+    </section>
+
+
+    <!-- MERGER -->
+
+    <section class="merger-card">
+
+        <div class="merger-content">
+
+            <div class="merger-label">
+                Major Structural Development
+            </div>
+
+            <h2>The Transocean + Valaris Merger</h2>
+
+            <p>
+                The proposed combination of Transocean and Valaris represents the
+                most significant structural development in the offshore drilling
+                industry. If completed, the combined company would become the
+                <strong style="color: var(--text);">
+                    largest offshore drilling contractor in the world by fleet size
+                </strong>.
+            </p>
+
+            <div class="merger-number">
+                <small>Potential Combined Market Capitalization</small>
+                <strong>$12–14 Billion</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        Offshore Drilling — Market Cap Snapshot · August 2026<br>
+        Market figures are approximate and reflect the snapshot data provided.
+    </footer>
+
+</div>
+
+</body>
+</html>
